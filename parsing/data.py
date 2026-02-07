@@ -1,5 +1,9 @@
 from parser import Create_Dataset
-links = ()
-for n in links:
-    ds = Create_Dataset(n, 1, 1)
-    ds.save_to_db()
+while True:
+    link = input("Input your X link: ")
+    ds = Create_Dataset(link, 1, 1)
+    
+    if link == 'exit':
+        break
+    else:
+        ds.save_to_db()

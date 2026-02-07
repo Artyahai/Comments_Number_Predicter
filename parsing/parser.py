@@ -59,4 +59,3 @@ class Create_Dataset(): # Creating class that hepls to collect data
         except:
             return 0 
         
-
