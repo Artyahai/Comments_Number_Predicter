@@ -55,6 +55,18 @@ conn = psycopg2.connect("host='localhost' port=5432 dbname='dataset' user='postg
 query = """ 
 SELECT likes, repostscount, commentcount, views FROM Xinfo; """
 df = pd.read_sql(query, conn)
-print(df)
 
-    
+X = df[['repostscount', 'commentcount', 'views']].values.astype(float)
+y = df['likes'].values.astype(float)
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2)
+X_train, X_test = standartize(X_train=X_train, X_test=X_test)
+model = MultiLinearregression(lr = 0.001, epochs = 100000)
+model.fit(X_train, y_train)
+y_pred = model.predict(X_test)
+print("\n--- RESULTS ---")
+print("MAE:", mae(y_test, y_pred))
+print("MSE:", mse(y_test, y_pred))
+print("R2:", r2_score(y_test, y_pred))
+
+print("\nWeights:", model.w)
+print("Bias:", model.b)
