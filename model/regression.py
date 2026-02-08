@@ -1,5 +1,6 @@
 import numpy as np
 import psycopg2
+import pandas as pd 
 class MultiLinearregression:
     def __init__(self, lr=0.01, epochs = 10000):
         self.lr = lr
@@ -50,9 +51,10 @@ def standartize(X_train, X_test):
     return X_train_scaled, X_test_scaled
 
 
-def create_dataset():
-    conn = psycopg2.connect("host='localhost', port=5432, database='dataset', user='postgres', password='postgres'")
-    cur = conn.cursor()
-    cur.execute()
+conn = psycopg2.connect("host='localhost' port=5432 dbname='dataset' user='postgres' password='postgres'")
+query = """ 
+SELECT likes, repostscount, commentcount, views FROM Xinfo; """
+df = pd.read_sql(query, conn)
+print(df)
 
     
